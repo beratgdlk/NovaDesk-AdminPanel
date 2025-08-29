@@ -4,15 +4,18 @@ import { Calendar } from '#/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card';
 import { ChartTooltip, ChartTooltipContent } from '#/components/ui/chart';
 import { Popover, PopoverContent, PopoverTrigger } from '#/components/ui/popover';
+import { useI18n } from '#/context/i18n-context';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#/components/ui/select';
 import { cn } from '#/lib/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
-import { tr } from 'date-fns/locale';
+import { tr, enUS } from 'date-fns/locale';
 import { useMemo, useState } from 'react';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 // Yardımcılar: sabit ay isimleri ve basit deterministik varyans üretici
 const MONTHS_TR = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function seededRand(seed: number) {
   let s = seed % 2147483647;
@@ -20,11 +23,11 @@ function seededRand(seed: number) {
   return () => (s = (s * 16807) % 2147483647) / 2147483647;
 }
 
-function generateMonthlyData(seed = 42) {
+function generateMonthlyData(months: string[], seed = 42) {
   const rand = seededRand(seed);
-  const messages = MONTHS_TR.map((m, i) => ({ date: m, count: Math.round(150 + rand() * 120 + i * 8) }));
-  const offers = MONTHS_TR.map((m, i) => ({ date: m, count: Math.round(70 + rand() * 80 + i * 5) }));
-  const policies = MONTHS_TR.map((m, i) => ({ date: m, count: Math.round(30 + rand() * 60 + i * 4) }));
+  const messages = months.map((m, i) => ({ date: m, count: Math.round(150 + rand() * 120 + i * 8) }));
+  const offers = months.map((m, i) => ({ date: m, count: Math.round(70 + rand() * 80 + i * 5) }));
+  const policies = months.map((m, i) => ({ date: m, count: Math.round(30 + rand() * 60 + i * 4) }));
   const conversion = MONTHS_TR.map((m, i) => ({ date: m, rate: Number(((policies[i].count / Math.max(1, offers[i].count)) * 100).toFixed(1)) }));
   return { messages, offers, policies, conversion };
 }
@@ -52,7 +55,7 @@ function generateDailyDataForMonth(monthIndex: number, seedBase = 100) {
 
 
 // Date Picker Component
-function DatePickerDemo({ date, setDate }: { date?: Date; setDate: (date?: Date) => void }) {
+function DatePickerDemo({ date, setDate, localeCode }: { date?: Date; setDate: (date?: Date) => void; localeCode: 'tr' | 'en' }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -64,7 +67,7 @@ function DatePickerDemo({ date, setDate }: { date?: Date; setDate: (date?: Date)
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "dd/MM/yyyy", { locale: tr }) : <span>Tarih seç</span>}
+          {date ? format(date, "dd/MM/yyyy", { locale: localeCode === 'tr' ? tr : enUS }) : <span>{localeCode === 'tr' ? 'Tarih seç' : 'Pick a date'}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -72,6 +75,7 @@ function DatePickerDemo({ date, setDate }: { date?: Date; setDate: (date?: Date)
           mode="single"
           selected={date}
           onSelect={setDate}
+          locale={localeCode === 'tr' ? tr : enUS as any}
           initialFocus
         />
       </PopoverContent>
@@ -80,22 +84,25 @@ function DatePickerDemo({ date, setDate }: { date?: Date; setDate: (date?: Date)
 }
 
 export default function Dashboard() {
+  const { t, locale } = useI18n();
   const [messageDate, setMessageDate] = useState<Date>();
   const [offerDate, setOfferDate] = useState<Date>();
   const [policyDate, setPolicyDate] = useState<Date>();
 
   // Aylık veriler (yıl geneli)
-  const { messages, offers, policies, conversion } = useMemo(() => generateMonthlyData(99), []);
+  const months = locale === 'tr' ? MONTHS_TR : MONTHS_EN;
+  const { messages, offers, policies, conversion } = useMemo(() => generateMonthlyData(months, 99), [locale]);
 
   // Seçili ay için günlük veriler
-  const selectedMonthIndex = (messageDate ?? offerDate ?? policyDate)?.getMonth() ?? new Date().getMonth();
+  const [selectedMonthIndexState, setSelectedMonthIndex] = useState<number>(new Date().getMonth());
+  const selectedMonthIndex = (messageDate ?? offerDate ?? policyDate)?.getMonth() ?? selectedMonthIndexState;
   const daily = useMemo(() => generateDailyDataForMonth(selectedMonthIndex), [selectedMonthIndex]);
 
   return (
     <>
       <Main>
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Analizler</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h1>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
@@ -103,10 +110,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-base font-medium">Başlatılan Mesaj Sayısı</CardTitle>
-                <CardDescription>Tarih seçerek filtreleyebilirsiniz</CardDescription>
+                <CardTitle className="text-base font-medium">{t('dashboard.messages')}</CardTitle>
+                <CardDescription>{t('dashboard.filterByDate')}</CardDescription>
               </div>
-              <DatePickerDemo date={messageDate} setDate={setMessageDate} />
+              <DatePickerDemo date={messageDate} setDate={setMessageDate} localeCode={locale} />
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={200}>
@@ -141,10 +148,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-base font-medium">Alınan Teklif Sayısı</CardTitle>
-                <CardDescription>Tarih seçerek filtreleyebilirsiniz</CardDescription>
+                <CardTitle className="text-base font-medium">{t('dashboard.offers')}</CardTitle>
+                <CardDescription>{t('dashboard.filterByDate')}</CardDescription>
               </div>
-              <DatePickerDemo date={offerDate} setDate={setOfferDate} />
+              <DatePickerDemo date={offerDate} setDate={setOfferDate} localeCode={locale} />
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={200}>
@@ -174,10 +181,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-base font-medium">Poliçeleşen Teklif Sayısı</CardTitle>
-                <CardDescription>Tarih seçerek filtreleyebilirsiniz</CardDescription>
+                <CardTitle className="text-base font-medium">{t('dashboard.policies')}</CardTitle>
+                <CardDescription>{t('dashboard.filterByDate')}</CardDescription>
               </div>
-              <DatePickerDemo date={policyDate} setDate={setPolicyDate} />
+              <DatePickerDemo date={policyDate} setDate={setPolicyDate} localeCode={locale} />
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={200}>
@@ -205,8 +212,20 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-base font-medium">Dönüşüm Oranı</CardTitle>
-                <CardDescription>Tekliften poliçeye dönüşüm (%)</CardDescription>
+                <CardTitle className="text-base font-medium">{t('dashboard.conversion')}</CardTitle>
+                <CardDescription>Offer → Policy (%)</CardDescription>
+              </div>
+              <div className="w-36">
+                <Select value={String(selectedMonthIndexState)} onValueChange={(v) => setSelectedMonthIndex(Number(v))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={months[selectedMonthIndexState]} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {months.map((m, i) => (
+                      <SelectItem key={m} value={String(i)}>{m}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </CardHeader>
             <CardContent>
@@ -228,8 +247,8 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-base font-medium">Günlük Dağılım — {MONTHS_TR[selectedMonthIndex]}</CardTitle>
-                <CardDescription>Seçili aya göre mesaj, teklif ve poliçe</CardDescription>
+                <CardTitle className="text-base font-medium">{t('dashboard.daily')} — {months[selectedMonthIndex]}</CardTitle>
+                <CardDescription>{t('dashboard.forMonth')}</CardDescription>
               </div>
             </CardHeader>
             <CardContent>

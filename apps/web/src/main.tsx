@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { handleServerError } from '#/utils/handle-server-error';
 import { FontProvider } from './context/font-context';
 import { FormDialogProvider } from './context/form-dialog-context';
+import { I18nProvider } from './context/i18n-context';
 import { ThemeProvider } from './context/theme-context';
 import './index.css';
 import { routeTree } from './routeTree.gen';
@@ -87,11 +88,13 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <FontProvider>
-            <FormDialogProvider>
-              <RouterProvider router={router} />
-            </FormDialogProvider>
-          </FontProvider>
+          <I18nProvider>
+            <FontProvider>
+              <FormDialogProvider>
+                <RouterProvider router={router} />
+              </FormDialogProvider>
+            </FontProvider>
+          </I18nProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>,

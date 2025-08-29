@@ -2,6 +2,7 @@ import SkipToMain from "#/components/skip-to-main";
 import { SidebarProvider } from "#/components/ui/sidebar";
 import { SearchProvider } from "#/context/search-context";
 import { cn } from "#/lib/utils";
+import { LanguageSwitch } from "#components/language-switch.tsx";
 import { ProfileDropdown } from "#components/profile-dropdown.tsx";
 import { Search } from "#components/search.tsx";
 import { ThemeSwitch } from "#components/theme-switch.tsx";
@@ -38,6 +39,7 @@ export function AdminLayout({ children }: Props) {
           <Header>
             <Search />
             <div className="ml-auto flex items-center space-x-4">
+              <LanguageSwitch />
               <ThemeSwitch />
               <ProfileDropdown />
             </div>

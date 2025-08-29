@@ -1,14 +1,14 @@
 import {
-  IconBrowserCheck,
-  IconGlobe,
-  IconHomeShield,
-  IconLayoutDashboard,
-  IconNotification,
-  IconPalette,
-  IconSettings,
-  IconShieldLock,
-  IconTool,
-  IconUserCog
+    IconBrowserCheck,
+    IconGlobe,
+    IconHomeShield,
+    IconLayoutDashboard,
+    IconNotification,
+    IconPalette,
+    IconSettings,
+    IconShieldLock,
+    IconTool,
+    IconUserCog
 } from "@tabler/icons-react";
 import { Command } from "lucide-react";
 import { type SidebarData } from "../types";
@@ -28,59 +28,59 @@ export const adminSidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: "Genel",
+      title: "sidebar.general",
       items: [
         {
-          title: "Ana Sayfa",
+          title: "sidebar.home",
           url: "/",
           icon: IconLayoutDashboard,
         },
         {
-          title: "Acenteler",
+          title: "sidebar.agents",
           url: "/agents",
           icon: IconHomeShield,
         },
         {
-          title: "Domainler",
+          title: "sidebar.domains",
           url: "/domains",
           icon: IconGlobe,
         },
         {
-          title: "Kullanıcılar",
+          title: "sidebar.users",
           url: "/users",
           icon: IconUserCog,
         },
         {
-          title: "Roller",
+          title: "sidebar.roles",
           url: "/roles",
           icon: IconShieldLock,
         },
       ],
     },
     {
-      title: "Diğer",
+      title: "sidebar.others",
       items: [
         {
-          title: "Ayarlar",
+          title: "sidebar.settings",
           icon: IconSettings,
           items: [
             {
-              title: "Profil",
+              title: "sidebar.profile",
               url: "/settings",
               icon: IconUserCog,
             },
             {
-              title: "Hesap",
+              title: "sidebar.account",
               url: "/settings/account",
               icon: IconTool,
             },
             {
-              title: "Görünüm",
+              title: "sidebar.appearance",
               url: "/settings/appearance",
               icon: IconPalette,
             },
             {
-              title: "Bildirim",
+              title: "sidebar.notifications",
               url: "/settings/notifications",
               icon: IconNotification,
             },
