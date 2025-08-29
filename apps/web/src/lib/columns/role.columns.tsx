@@ -4,6 +4,7 @@ import { RoleUpdateForm } from "#/components/form/role-update-form";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { useFormDialog } from "#/context/form-dialog-context";
+import { useI18n } from "#/context/i18n-context";
 import { api } from "#lib/api.ts";
 import { formatDate } from "#lib/utils.ts";
 import { IconEdit, IconEye, IconShield, IconTrash, IconUsers } from "@tabler/icons-react";
@@ -27,7 +28,10 @@ const colHelper = createColumnHelper<RoleShowResponse>();
 
 export const roleColumns = [
   colHelper.accessor("name", {
-    header: "Rol Adı",
+    header: () => {
+      const { t } = useI18n();
+      return t('roles.columns.name');
+    },
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
         <IconShield className="h-4 w-4 text-primary" />
@@ -37,7 +41,7 @@ export const roleColumns = [
   }),
 
   colHelper.accessor("slug", {
-    header: "Slug",
+    header: () => 'Slug',
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground font-mono">
         {row.original.slug}
@@ -46,7 +50,10 @@ export const roleColumns = [
   }),
 
   colHelper.accessor("description", {
-    header: "Açıklama",
+    header: () => {
+      const { t } = useI18n();
+      return t('roles.columns.description');
+    },
     cell: ({ row }) => {
       const description = row.original.description;
       if (!description) {
@@ -62,7 +69,10 @@ export const roleColumns = [
   }),
 
   colHelper.accessor("permissions", {
-    header: "İzinler",
+    header: () => {
+      const { t } = useI18n();
+      return t('roles.columns.permissions');
+    },
     cell: ({ row }) => {
       const permissions = row.original.permissions;
       
@@ -74,7 +84,7 @@ export const roleColumns = [
         return (
           <Badge variant="default" className="text-xs">
             <IconUsers className="h-3 w-3 mr-1" />
-            Tüm İzinler
+            All Permissions
           </Badge>
         );
       }
@@ -82,7 +92,7 @@ export const roleColumns = [
       return (
         <div className="flex items-center gap-1">
           <Badge variant="secondary" className="text-xs">
-            {permissions.length} İzin
+            {permissions.length} {permissions.length === 1 ? 'Permission' : 'Permissions'}
           </Badge>
         </div>
       );
@@ -90,7 +100,10 @@ export const roleColumns = [
   }),
 
   colHelper.accessor("createdAt", {
-    header: "Oluşturulma Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t('common.createdAt');
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -101,7 +114,10 @@ export const roleColumns = [
   }),
 
   colHelper.accessor("updatedAt", {
-    header: "Güncellenme Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t('common.updatedAt');
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -113,7 +129,10 @@ export const roleColumns = [
 
   colHelper.display({
     id: "actions",
-    header: "İşlemler",
+    header: () => {
+      const { t } = useI18n();
+      return t('common.actions');
+    },
     cell: (info) => {
       const role = info.row.original;
       return <RoleActions role={role} />;

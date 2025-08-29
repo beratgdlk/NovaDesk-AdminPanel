@@ -8,6 +8,24 @@ type Messages = Record<Locale, Dictionary>;
 
 const defaultMessages: Messages = {
   tr: {
+    // Roles page
+    'roles.title': 'Roller',
+    'roles.subtitle': 'Tüm rolleri yönetin ve yeni rol ekleyin.',
+    'roles.create.title': 'Yeni Rol Ekle',
+    'roles.create.button': 'Rol Ekle',
+    'roles.columns.name': 'Rol Adı',
+    'roles.columns.description': 'Açıklama',
+    'roles.columns.permissions': 'İzinler',
+    // Users page
+    'users.title': 'Kullanıcılar',
+    'users.subtitle': 'Tüm kullanıcıları yönetin ve yeni kullanıcı ekleyin.',
+    'users.create.title': 'Yeni Kullanıcı Ekle',
+    'users.create.button': 'Kullanıcı Ekle',
+    'users.columns.firstName': 'Ad',
+    'users.columns.lastName': 'Soyad',
+    'users.columns.email': 'E-posta',
+    'users.columns.roles': 'Roller',
+    'users.columns.agent': 'Acente',
     // Domains page
     'domains.title': 'Domainler',
     'domains.subtitle': 'Tüm acente domainlerini görüntüleyin ve yönetin.',
@@ -49,6 +67,24 @@ const defaultMessages: Messages = {
     'dashboard.forMonth': 'Seçili aya göre mesaj, teklif ve poliçe',
   },
   en: {
+    // Roles page
+    'roles.title': 'Roles',
+    'roles.subtitle': 'Manage all roles and add new ones.',
+    'roles.create.title': 'Add New Role',
+    'roles.create.button': 'Add Role',
+    'roles.columns.name': 'Role Name',
+    'roles.columns.description': 'Description',
+    'roles.columns.permissions': 'Permissions',
+    // Users page
+    'users.title': 'Users',
+    'users.subtitle': 'Manage all users and add new ones.',
+    'users.create.title': 'Add New User',
+    'users.create.button': 'Add User',
+    'users.columns.firstName': 'First Name',
+    'users.columns.lastName': 'Last Name',
+    'users.columns.email': 'Email',
+    'users.columns.roles': 'Roles',
+    'users.columns.agent': 'Agent',
     // Domains page
     'domains.title': 'Domains',
     'domains.subtitle': 'View and manage all agent domains.',

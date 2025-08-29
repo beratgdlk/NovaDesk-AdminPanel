@@ -4,6 +4,7 @@ import { UserUpdateForm } from "#/components/form/user-update-form";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
 import { useFormDialog } from "#/context/form-dialog-context";
+import { useI18n } from "#/context/i18n-context";
 import { api } from "#lib/api.ts";
 import { formatDate } from "#lib/utils.ts";
 import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
@@ -27,7 +28,10 @@ const colHelper = createColumnHelper<UserShowResponse>();
 
 export const userColumns = [
   colHelper.accessor("firstName", {
-    header: "Ad",
+    header: () => {
+      const { t } = useI18n();
+      return t("users.columns.firstName");
+    },
     cell: ({ row }) => (
       <div className="font-medium text-foreground">
         {row.original.firstName}
@@ -36,21 +40,30 @@ export const userColumns = [
   }),
 
   colHelper.accessor("lastName", {
-    header: "Soyad",
+    header: () => {
+      const { t } = useI18n();
+      return t("users.columns.lastName");
+    },
     cell: ({ row }) => (
       <div className="font-medium text-foreground">{row.original.lastName}</div>
     ),
   }),
 
   colHelper.accessor("email", {
-    header: "E-posta",
+    header: () => {
+      const { t } = useI18n();
+      return t("users.columns.email");
+    },
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground">{row.original.email}</div>
     ),
   }),
 
   colHelper.accessor("rolesSlugs", {
-    header: "Roller",
+    header: () => {
+      const { t } = useI18n();
+      return t("users.columns.roles");
+    },
     cell: ({ row }) => {
       const roles = row.original.rolesSlugs;
       if (!roles || roles.length === 0) {
@@ -75,7 +88,10 @@ export const userColumns = [
   }),
 
   colHelper.accessor("agent", {
-    header: "Acente",
+    header: () => {
+      const { t } = useI18n();
+      return t("users.columns.agent");
+    },
     cell: ({ row }) => {
       const agent = row.original.agent;
       if (!agent) {
@@ -91,20 +107,26 @@ export const userColumns = [
   }),
 
   colHelper.accessor("isActive", {
-    header: "Durum",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.status");
+    },
     cell: ({ row }) => {
       const isActive = row.original.isActive;
 
       return (
         <Badge variant={isActive ? "default" : "secondary"}>
-          {isActive ? "Aktif" : "Pasif"}
+          {isActive ? "Active" : "Inactive"}
         </Badge>
       );
     },
   }),
 
   colHelper.accessor("createdAt", {
-    header: "Oluşturulma Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.createdAt");
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -115,7 +137,10 @@ export const userColumns = [
   }),
 
   colHelper.accessor("updatedAt", {
-    header: "Güncellenme Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.updatedAt");
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -127,7 +152,10 @@ export const userColumns = [
 
   colHelper.display({
     id: "actions",
-    header: "İşlemler",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.actions");
+    },
     cell: (info) => {
       const user = info.row.original;
       return <UserActions user={user} />;

@@ -2,6 +2,7 @@ import { RoleCreateForm } from "#/components/form/role-create-form";
 import { Main } from "#/components/layout/main";
 import { Button } from "#/components/ui/button";
 import { useFormDialog } from "#/context/form-dialog-context";
+import { useI18n } from "#/context/i18n-context";
 import { DataTable } from "#components/datatable/data-table.tsx";
 import { api } from "#lib/api.ts";
 import { roleColumns } from "#lib/columns/role.columns.tsx";
@@ -15,10 +16,11 @@ export const Route = createFileRoute("/_authenticated/(admin)/roles/")({
 
 function RouteComponent() {
   const { openFormDialog, closeFormDialog } = useFormDialog();
+  const { t } = useI18n();
 
   const handleCreateRole = () => {
     openFormDialog({
-      title: "Yeni Rol Ekle",
+      title: t('roles.create.title'),
       content: <RoleCreateForm onSuccess={closeFormDialog} />,
       maxWidth: "sm:max-w-[600px]",
     });
@@ -38,15 +40,13 @@ function RouteComponent() {
             {/* Page Header */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">Roller</h2>
-                <p className="text-muted-foreground">
-                  Tüm rolleri yönetin ve yeni rol ekleyin.
-                </p>
+                <h2 className="text-2xl font-bold tracking-tight">{t('roles.title')}</h2>
+                <p className="text-muted-foreground">{t('roles.subtitle')}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Button onClick={handleCreateRole}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Rol Ekle
+                  {t('roles.create.button')}
                 </Button>
               </div>
             </div>
