@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "#/components/ui/dialog";
 import { Separator } from "#/components/ui/separator";
+import { useI18n } from "#/context/i18n-context.tsx";
 import { formatDate } from "#lib/utils.ts";
 import {
   IconCalendar,
@@ -35,6 +36,7 @@ interface UserShowModalProps {
 
 export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
   if (!user) return null;
+  const { t } = useI18n();
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -42,7 +44,7 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
             <IconUser className="h-6 w-6 text-primary" />
-            Kullanıcı Detayları
+            {t('users.modal.title')}
           </DialogTitle>
         </DialogHeader>
 
@@ -51,25 +53,25 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconUser className="h-5 w-5 text-muted-foreground" />
-              Kişisel Bilgiler
+              {t('users.modal.personalInfo')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Ad
+                  {t('users.columns.firstName')}
                 </label>
                 <p className="text-base font-medium">{user.firstName}</p>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Soyad
+                  {t('users.columns.lastName')}
                 </label>
                 <p className="text-base font-medium">{user.lastName}</p>
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                   <IconMail className="h-4 w-4" />
-                  E-posta
+                  {t('users.columns.email')}
                 </label>
                 <p className="text-base text-muted-foreground">{user.email}</p>
               </div>
@@ -80,23 +82,23 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconShield className="h-5 w-5 text-muted-foreground" />
-              Yetki ve Durum
+              {t('users.modal.permissionsStatus')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                   <IconUserCheck className="h-4 w-4" />
-                  Durum
+                  {t('common.status')}
                 </label>
                 <div>
                   <Badge variant={user.isActive ? "default" : "secondary"} className="text-sm">
-                    {user.isActive ? "Aktif" : "Pasif"}
+                    {user.isActive ? t('common.active') : t('common.inactive')}
                   </Badge>
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Roller
+                  {t('users.columns.roles')}
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {user.rolesSlugs && user.rolesSlugs.length > 0 ? (
@@ -107,14 +109,14 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
                     ))
                   ) : (
                     <span className="text-sm text-muted-foreground">
-                      Rol atanmamış
+                      {t('users.modal.noRoles')}
                     </span>
                   )}
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Acente
+                  {t('users.columns.agent')}
                 </label>
                 <div>
                   {user.agent ? (
@@ -123,7 +125,7 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
                     </Badge>
                   ) : (
                     <span className="text-sm text-muted-foreground">
-                      Acente atanmamış
+                      {t('users.modal.noAgent')}
                     </span>
                   )}
                 </div>
@@ -135,12 +137,12 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconCalendar className="h-5 w-5 text-muted-foreground" />
-              Tarih Bilgileri
+              {t('users.modal.dates')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Oluşturulma Tarihi
+                  {t('common.createdAt')}
                 </label>
                 <p className="text-sm text-muted-foreground">
                   {formatDate(user.createdAt, "dd MMMM yyyy, HH:mm")}
@@ -148,7 +150,7 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Son Güncellenme
+                  {t('common.updatedAt')}
                 </label>
                 <p className="text-sm text-muted-foreground">
                   {formatDate(user.updatedAt, "dd MMMM yyyy, HH:mm")}
@@ -162,7 +164,7 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
             <div className="flex items-center justify-between">
               <div>
                 <label className="text-sm font-medium text-muted-foreground">
-                  Kullanıcı ID
+                  {t('users.modal.userId')}
                 </label>
                 <p className="text-xs font-mono text-muted-foreground mt-1">
                   {user.id}
@@ -171,10 +173,10 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigator.clipboard.writeText(user.id)}
+                onClick={() => navigator.clipboard.writeText(String(user.id))}
                 className="text-xs"
               >
-                Kopyala
+                {t('common.copy')}
               </Button>
             </div>
           </div>
@@ -185,7 +187,7 @@ export function UserShowModal({ isOpen, onClose, user }: UserShowModalProps) {
         {/* Alt Butonlar */}
         <div className="flex justify-end gap-3">
           <Button variant="outline" onClick={onClose}>
-            Kapat
+            {t('common.close')}
           </Button>
         </div>
       </DialogContent>

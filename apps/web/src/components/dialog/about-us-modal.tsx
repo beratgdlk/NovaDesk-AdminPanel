@@ -1,11 +1,12 @@
 import { Button } from "#/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
 } from "#/components/ui/dialog";
 import { Textarea } from "#/components/ui/textarea";
+import { useI18n } from "#/context/i18n-context.tsx";
 import { type AgentUpdatePayload } from "#backend/modules/agents/types";
 import { api } from "#lib/api.ts";
 import useAgentStore from "#stores/agent-store.ts";
@@ -23,7 +24,7 @@ interface AboutUsModalProps {
 export function AboutUsModal({
   isOpen,
   onClose,
-  title = "Pop-Up",
+  title,
 }: AboutUsModalProps) {
   const { agent } = useAgentStore();
   const queryClient = useQueryClient();
@@ -32,6 +33,7 @@ export function AboutUsModal({
       ...agent,
     },
   });
+  const { t } = useI18n();
 
   const aboutUsText = watch("chatbotInstructions.aboutUs") || "";
   const maxChars = 1000;
@@ -42,13 +44,13 @@ export function AboutUsModal({
     try {
       const response = await api.agents({ uuid: agent?.uuid }).put(data as any);
       if (response.data) {
-        toast.success("Hakkımızda bilgisi güncellendi");
+        toast.success(t('agents.modals.about.saveSuccess'));
         queryClient.invalidateQueries({ queryKey: ["agent"] });
       } else {
-        toast.error("Hakkımızda bilgisi güncellenemedi");
+        toast.error(t('agents.modals.about.saveError'));
       }
     } catch (error) {
-      toast.error("Hakkımızda bilgisi güncellenemedi");
+      toast.error(t('agents.modals.about.saveError'));
     }
 
     onClose();
@@ -66,7 +68,7 @@ export function AboutUsModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
+          <DialogTitle className="text-xl font-bold">{title ?? t('agents.modals.popUpTitle')}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -75,15 +77,15 @@ export function AboutUsModal({
               {...register("chatbotInstructions.aboutUs", {
                 maxLength: {
                   value: maxChars,
-                  message: `Maksimum ${maxChars} karakter girebilirsiniz`,
+                  message: `${t('common.maxCharsPrefix')} ${maxChars} ${t('common.maxCharsSuffix')}`,
                 },
               })}
               className="min-h-[250px] text-base resize-none"
-              placeholder="Hakkımızda bilgilerinizi buraya yazın..."
+              placeholder={t('agents.modals.about.placeholder')}
             />
             <div className="flex justify-between items-center mt-2">
               <span className="text-sm text-muted-foreground">
-                {aboutUsText.length}/{maxChars} karakter
+                {aboutUsText.length}/{maxChars} {t('common.characters')}
               </span>
             </div>
           </div>
@@ -93,7 +95,7 @@ export function AboutUsModal({
               type="submit"
               className="bg-green-600 hover:bg-green-700 text-white px-8"
             >
-              Kaydet
+              {t('common.save')}
             </Button>
           </div>
         </form>

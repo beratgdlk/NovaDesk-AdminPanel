@@ -6,6 +6,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "#/components/ui/dialog";
+import { useI18n } from "#/context/i18n-context.tsx";
 import { formatDate } from "#lib/utils.ts";
 import {
     IconCalendar,
@@ -37,6 +38,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
 
   const hasWildcard = roleData.permissions.includes("*");
   const permissionCount = roleData.permissions.length;
+  const { t } = useI18n();
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -44,7 +46,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
             <IconShield className="h-6 w-6 text-primary" />
-            Rol Detayları
+            {t('roles.modal.title')}
           </DialogTitle>
         </DialogHeader>
 
@@ -53,12 +55,12 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconInfoCircle className="h-5 w-5 text-muted-foreground" />
-              Temel Bilgiler
+              {t('roles.modal.basicInfo')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">
-                  Rol Adı
+                  {t('roles.columns.name')}
                 </label>
                 <p className="text-base font-medium">{roleData.name}</p>
               </div>
@@ -71,7 +73,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
               {roleData.description && (
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-sm font-medium text-muted-foreground">
-                    Açıklama
+                    {t('roles.columns.description')}
                   </label>
                   <p className="text-base text-foreground bg-muted/50 p-3 rounded-md">
                     {roleData.description}
@@ -85,27 +87,25 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconKey className="h-5 w-5 text-muted-foreground" />
-              İzinler ve Yetkiler
+              {t('roles.columns.permissions')}
             </h3>
             
             {hasWildcard ? (
               <div className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/20 rounded-lg">
                 <IconUsers className="h-6 w-6 text-primary" />
                 <div>
-                  <p className="font-medium text-primary">Tam Yetki</p>
+                  <p className="font-medium text-primary">{t('roles.modal.fullAccess')}</p>
                   <p className="text-sm text-muted-foreground">
-                    Bu rol sistemdeki tüm işlemleri gerçekleştirebilir.
+                    {t('roles.modal.fullAccessDesc')}
                   </p>
                 </div>
               </div>
             ) : (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-muted-foreground">
-                    Toplam İzin Sayısı
-                  </p>
+                  <p className="text-sm text-muted-foreground">{t('roles.modal.totalPermissions')}</p>
                   <Badge variant="secondary">
-                    {permissionCount} İzin
+                    {permissionCount} {t('roles.columns.permissions')}
                   </Badge>
                 </div>
                 
@@ -126,7 +126,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
                 ) : (
                   <div className="text-center py-8">
                     <IconKey className="h-12 w-12 text-muted-foreground/50 mx-auto mb-2" />
-                    <p className="text-muted-foreground">Henüz izin tanımlanmamış</p>
+                    <p className="text-muted-foreground">{t('roles.modal.noPermissions')}</p>
                   </div>
                 )}
               </div>
@@ -137,13 +137,13 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <IconCalendar className="h-5 w-5 text-muted-foreground" />
-              Tarih Bilgileri
+              {t('roles.modal.dates')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                   <IconCalendar className="h-4 w-4" />
-                  Oluşturulma Tarihi
+                  {t('common.createdAt')}
                 </label>
                 <p className="text-sm text-foreground">
                   {formatDate(roleData.createdAt, "dd.MM.yyyy HH:mm")}
@@ -152,7 +152,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
               <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                   <IconCalendar className="h-4 w-4" />
-                  Son Güncellenme
+                  {t('common.updatedAt')}
                 </label>
                 <p className="text-sm text-foreground">
                   {formatDate(roleData.updatedAt, "dd.MM.yyyy HH:mm")}
@@ -177,7 +177,7 @@ export function RoleShowModal({ isOpen, onClose, roleData }: RoleShowModalProps)
         {/* Close Button */}
         <div className="flex justify-end pt-4">
           <Button variant="outline" onClick={onClose}>
-            Kapat
+            {t('common.close')}
           </Button>
         </div>
       </DialogContent>

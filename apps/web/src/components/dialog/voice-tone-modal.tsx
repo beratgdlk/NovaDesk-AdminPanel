@@ -1,12 +1,13 @@
 import { Button } from "#/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
 } from "#/components/ui/dialog";
 import { RadioGroup } from "#/components/ui/radio-group";
 import { Textarea } from "#/components/ui/textarea";
+import { useI18n } from "#/context/i18n-context.tsx";
 import { type AgentUpdatePayload } from "#backend/modules/agents/types";
 import { api } from "#lib/api.ts";
 import useAgentStore from "#stores/agent-store.ts";
@@ -22,22 +23,23 @@ interface VoiceToneModalProps {
 }
 
 const promptButtons = [
-  { text: "Samimi", description: "Samimi ses tonu ile konuşuruz." },
-  { text: "Profesyonel", description: "Profesyonel ses tonu ile konuşuruz." },
-  { text: "Dostane", description: "Dostane ses tonu ile konuşuruz." },
-  { text: "Resmi", description: "Resmi ses tonu ile konuşuruz." },
-  { text: "Eğlenceli", description: "Eğlenceli ses tonu ile konuşuruz." },
-  { text: "Yardımsever", description: "Yardımsever ses tonu ile konuşuruz." },
+  { key: 'friendly', textKey: 'agents.modals.voiceTone.tones.friendly', descKey: 'agents.modals.voiceTone.descriptions.friendly' },
+  { key: 'professional', textKey: 'agents.modals.voiceTone.tones.professional', descKey: 'agents.modals.voiceTone.descriptions.professional' },
+  { key: 'amicable', textKey: 'agents.modals.voiceTone.tones.amicable', descKey: 'agents.modals.voiceTone.descriptions.amicable' },
+  { key: 'formal', textKey: 'agents.modals.voiceTone.tones.formal', descKey: 'agents.modals.voiceTone.descriptions.formal' },
+  { key: 'playful', textKey: 'agents.modals.voiceTone.tones.playful', descKey: 'agents.modals.voiceTone.descriptions.playful' },
+  { key: 'helpful', textKey: 'agents.modals.voiceTone.tones.helpful', descKey: 'agents.modals.voiceTone.descriptions.helpful' },
 ];
 
 export function VoiceToneModal({
   isOpen,
   onClose,
-  title = "Pop-Up",
+  title,
 }: VoiceToneModalProps) {
   const { agent } = useAgentStore();
   const queryClient = useQueryClient();
   const [hoveredDescription, setHoveredDescription] = useState<string>("");
+  const { t } = useI18n();
 
   const { handleSubmit, control, reset, watch } = useForm<AgentUpdatePayload>({
     defaultValues: {
@@ -48,21 +50,16 @@ export function VoiceToneModal({
   const selectedTone = watch("chatbotInstructions.voiceTone");
 
   // Gösterilecek description: hover varsa hover, yoksa seçili olanın description'ı
-  const displayedDescription =
-    hoveredDescription ||
-    (selectedTone
-      ? promptButtons.find((btn) => btn.text === selectedTone)?.description ||
-        ""
-      : "");
+  const displayedDescription = hoveredDescription || (selectedTone ? t(`agents.modals.voiceTone.descriptions.${selectedTone}`) : "");
 
   const onSubmit = async (data: AgentUpdatePayload) => {
     if (!agent?.uuid) return;
     const response = await api.agents({ uuid: agent?.uuid }).put(data as any);
     if (response.data) {
-      toast.success("Ses tonu güncellendi");
+      toast.success(t('agents.modals.voiceTone.saveSuccess'));
       queryClient.invalidateQueries({ queryKey: ["agent"] });
     } else {
-      toast.error("Ses tonu güncellenemedi");
+      toast.error(t('agents.modals.voiceTone.saveError'));
     }
     onClose();
   };
@@ -79,7 +76,7 @@ export function VoiceToneModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
+          <DialogTitle className="text-xl font-bold">{title ?? t('agents.modals.popUpTitle')}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -88,7 +85,7 @@ export function VoiceToneModal({
               value={displayedDescription}
               readOnly
               className="min-h-[150px] text-base resize-none bg-muted/50"
-              placeholder="Bir ses tonu seçin veya butonun üzerine gelin açıklamasını görmek için..."
+              placeholder={t('agents.modals.voiceTone.placeholder')}
             />
           </div>
 
@@ -106,22 +103,20 @@ export function VoiceToneModal({
                   >
                     {promptButtons.map((button) => (
                       <Button
-                        key={button.text}
+                        key={button.key}
                         variant="outline"
                         className={`p-6 text-base transition-all duration-200 hover:bg-primary hover:text-primary-foreground hover:border-primary ${
-                          field.value === button.text
+                          field.value === button.key
                             ? "bg-primary text-primary-foreground border-primary"
                             : ""
                         }`}
-                        onClick={() => field.onChange(button.text)}
-                        onMouseEnter={() =>
-                          setHoveredDescription(button.description)
-                        }
+                        onClick={() => field.onChange(button.key)}
+                        onMouseEnter={() => setHoveredDescription(t(button.descKey))}
                         onMouseLeave={() => setHoveredDescription("")}
                         type="button"
                       >
                         <span className="text-lg font-medium">
-                          {button.text}
+                          {t(button.textKey)}
                         </span>
                       </Button>
                     ))}
@@ -141,7 +136,7 @@ export function VoiceToneModal({
                     className="bg-green-600 hover:bg-green-700 text-white px-8"
                     disabled={!field.value}
                   >
-                    Kaydet
+                    {t('common.save')}
                   </Button>
                 )}
               />
