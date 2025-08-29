@@ -1,41 +1,65 @@
-# Turborepo starter with shell commands
+# NovaDesk
 
-This Turborepo starter is maintained by the Turborepo core team. This template is great for issue reproductions and exploring building task graphs without frameworks.
+A modern, customizable admin dashboard starter that runs without a backend using an in‑memory mock API.
 
-## Using this example
+NovaDesk is a flexible admin template built for internal dashboards and data‑driven applications. It ships with an in‑memory mock API for a backend‑free demo; switching to a real API is straightforward. It includes theming (light/dark), data tables with filtering, form validation, a role/permission model, and a minimal chat experience.
 
-Run the following command:
+## Highlights
 
-```sh
-npx create-turbo@latest -e with-shell-commands
+- React 19, Vite, Tailwind CSS v4, TanStack Router/Query, Zustand
+- Fully customizable theming and components (Shadcn‑style UI)
+- In‑memory mock API; easily replaceable with your own backend
+- Example modules: roles/permissions, users/agents, domains, chatbot integration
+- Fast setup and DX with Bun
+
+## Structure
+
+- `apps/web`: The entire application (frontend + in‑memory mock API)
+
+## Setup
+
+Prerequisites: Bun 1.2+, Node 18+
+
+```bash
+bun install
+cd apps/web
+bun install
 ```
 
-### For bug reproductions
+Development:
 
-Giving the Turborepo core team a minimal reproduction is the best way to create a tight feedback loop for a bug you'd like to report.
+```bash
+cd apps/web
+bun run dev
+# Open the Local URL from Vite output (e.g. http://localhost:5173)
+```
 
-Because most monorepos will rely on more tooling than Turborepo (frameworks, linters, formatters, etc.), it's often useful for us to have a reproduction that strips away all of this other tooling so we can focus _only_ on Turborepo's role in your repo. This example does exactly that, giving you a good starting point for creating a reproduction.
+Build/Preview:
 
-- Feel free to rename/delete packages for your reproduction so that you can be confident it most closely matches your use case.
-- If you need to use a different package manager to produce your bug, run `npx @turbo/workspaces convert` to switch package managers.
-- It's possible that your bug really **does** have to do with the interaction of Turborepo and other tooling within your repository. If you find that your bug does not reproduce in this minimal example and you're confident Turborepo is still at fault, feel free to bring that other tooling into your reproduction.
+```bash
+cd apps/web
+bun run build
+bun run preview
+```
 
-## What's inside?
+## Environment Variables
 
-This Turborepo includes the following packages:
+`apps/web` runs with the mock API by default. Optionally, you can add a `.env` under `config/apps/web/.env`.
 
-### Apps and Packages
+Example:
 
-- `app-a`: A final package that depends on all other packages in the graph and has no dependents. This could resemble an application in your monorepo that consumes everything in your monorepo through its topological tree.
-- `app-b`: Another final package with many dependencies. No dependents, lots of dependencies.
-- `pkg-a`: A package that has all scripts in the root `package.json`.
-- `pkg-b`: A package with _almost_ all scripts in the root `package.json`.
+```env
+VITE_API_URL=http://localhost:3000
+```
 
-### Some scripts to try
+> Note: With the mock API enabled, no real backend is required. To connect a real backend, adapt `src/lib/api.ts` to your endpoints.
 
-If you haven't yet, [install global `turbo`](https://turbo.build/repo/docs/installing#install-globally) to run tasks.
+## Scripts (apps/web)
 
-- `turbo build lint check-types`: Runs all tasks in the default graph.
-- `turbo build`: A basic command to build `app-a` and `app-b` in parallel.
-- `turbo build --filter=app-a`: Building only `app-a` and its dependencies.
-- `turbo lint`: A basic command for running lints in all packages in parallel.
+- `bun run dev`: Vite dev server
+- `bun run build`: Production build
+- `bun run preview`: Preview the build
+
+## License
+
+MIT
