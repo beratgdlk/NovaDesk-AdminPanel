@@ -1,0 +1,8 @@
+[
+  { "uuid": "demo-agent", "name": "Demo Agent", "insurupAgentId": "DEMO-AGENT" },
+  { "uuid": "agent-2", "name": "Agent 2", "insurupAgentId": "AGENT-1002" },
+  { "uuid": "agent-3", "name": "Agent 3", "insurupAgentId": "AGENT-1003" },
+  { "uuid": "agent-4", "name": "Agent 4", "insurupAgentId": "AGENT-1004" },
+  { "uuid": "agent-5", "name": "Agent 5", "insurupAgentId": "AGENT-1005" },
+  { "uuid": "agent-6", "name": "Agent 6", "insurupAgentId": "AGENT-1006" }
+]

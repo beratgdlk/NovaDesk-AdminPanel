@@ -5,24 +5,19 @@ type UUID = string;
 
 const now = () => new Date().toISOString();
 
-// In-memory DB
+// JSON-backed DB (imported at build)
+import agentsJson from '#/mocks/db/agents.json';
+import conversationsJson from '#/mocks/db/conversations.json';
+import domainsJson from '#/mocks/db/domains.json';
+import rolesJson from '#/mocks/db/roles.json';
+import usersJson from '#/mocks/db/users.json';
+
 const db = {
-  agents: [
-    { uuid: 'demo-agent', name: 'Demo Agent', insurupAgentId: 'DEMO-AGENT', createdAt: now(), updatedAt: now() },
-  ],
-  roles: [
-    { uuid: 'admin', name: 'Yönetici', slug: 'admin', description: 'Tüm izinler', permissions: ['*'], createdAt: now(), updatedAt: now() },
-    { uuid: 'editor', name: 'Editör', slug: 'editor', description: 'İçerik yönetimi', permissions: ['posts:show','posts:create','posts:update'], createdAt: now(), updatedAt: now() },
-  ],
-  users: [
-    { id: '1', firstName: 'Demo', lastName: 'User', email: 'demo@example.com', isActive: true, rolesSlugs: ['admin'], createdAt: now(), updatedAt: now(), agent: { uuid: 'demo-agent', name: 'Demo Agent' } },
-  ],
-  domains: [
-    { uuid: 'd1', domain: 'example.com', isEnabled: true, createdAt: now(), updatedAt: now(), agent: { uuid: 'demo-agent', name: 'Demo Agent', insurupAgentId: 'DEMO-AGENT' } },
-  ],
-  conversations: [
-    { conversationId: 'conv-1', title: 'Hoş geldiniz', updatedAt: now(), messages: [ { id: 'm-1', role: 'assistant', parts: [{ type: 'text', text: 'Merhaba! Nasıl yardımcı olabilirim?' }] } ] },
-  ] as any[],
+  agents: (agentsJson as any[]).map((a) => ({ ...a, createdAt: now(), updatedAt: now() })),
+  roles: (rolesJson as any[]).map((r) => ({ ...r, createdAt: now(), updatedAt: now() })),
+  users: (usersJson as any[]).map((u) => ({ ...u, createdAt: now(), updatedAt: now() })),
+  domains: (domainsJson as any[]).map((d) => ({ ...d, createdAt: now(), updatedAt: now() })),
+  conversations: (conversationsJson as any[]),
 };
 
 // Seed helpers to enrich demo data for visual variety

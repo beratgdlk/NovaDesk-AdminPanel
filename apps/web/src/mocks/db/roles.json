@@ -1,0 +1,4 @@
+[
+  { "uuid": "admin", "name": "Administrator", "slug": "admin", "description": "Full access", "permissions": ["*"] },
+  { "uuid": "editor", "name": "Editor", "slug": "editor", "description": "Content management", "permissions": ["posts:show","posts:create","posts:update"] }
+]

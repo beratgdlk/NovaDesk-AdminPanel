@@ -1,0 +1,5 @@
+[
+  { "id": "1", "firstName": "Demo", "lastName": "User", "email": "demo@example.com", "isActive": true, "rolesSlugs": ["admin"], "agent": { "uuid": "demo-agent", "name": "Demo Agent" } },
+  { "id": "2", "firstName": "Ada", "lastName": "Yılmaz", "email": "ada.yilmaz@example.com", "isActive": true, "rolesSlugs": ["editor"], "agent": { "uuid": "agent-2", "name": "Agent 2" } },
+  { "id": "3", "firstName": "Bora", "lastName": "Demir", "email": "bora.demir@example.com", "isActive": false, "rolesSlugs": ["admin"], "agent": { "uuid": "agent-3", "name": "Agent 3" } }
+]

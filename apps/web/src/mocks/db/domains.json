@@ -1,0 +1,5 @@
+[
+  { "uuid": "d1", "domain": "example.com", "isEnabled": true, "agent": { "uuid": "demo-agent", "name": "Demo Agent", "insurupAgentId": "DEMO-AGENT" } },
+  { "uuid": "d2", "domain": "site2.demo.dev", "isEnabled": true, "agent": { "uuid": "agent-2", "name": "Agent 2", "insurupAgentId": "AGENT-1002" } },
+  { "uuid": "d3", "domain": "site3.demo.dev", "isEnabled": false, "agent": { "uuid": "agent-3", "name": "Agent 3", "insurupAgentId": "AGENT-1003" } }
+]

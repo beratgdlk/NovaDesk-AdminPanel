@@ -1,10 +1,33 @@
-export type {
-  ConversationHistory,
-  ConversationListItem,
-  ConversationMessage as ChatMessage,
-  ToolCall,
-  ToolResult,
-} from '#backend/modules/chat/conversation/types';
+// Local minimal copies of backend conversation types
+export type ConversationHistory = {
+  messages: Array<{ id: string; role: 'user' | 'assistant'; parts: any[]; metadata?: any }>;
+};
+
+export type ConversationListItem = {
+  conversationId: string;
+  title: string;
+  updatedAt: string | Date;
+  lastMessage?: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  role: 'user' | 'assistant';
+  parts: any[];
+  metadata?: any;
+};
+
+export type ToolCall = {
+  toolCallId: string;
+  toolName: string;
+  args: Record<string, unknown>;
+};
+
+export type ToolResult = {
+  toolCallId: string;
+  output: unknown;
+  isError?: boolean;
+};
 
 import type { ThreadMessageLike } from '@assistant-ui/react';
 

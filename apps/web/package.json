@@ -93,6 +93,7 @@
     "vite": "^6.2.7"
   },
   "imports": {
-    "#*": "./src/*"
+    "#*": "./src/*",
+    "#backend/*": "./src/stubs/*"
   }
 }
