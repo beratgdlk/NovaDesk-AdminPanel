@@ -1,4 +1,5 @@
 import { Main } from "#/components/layout/main";
+import { useI18n } from "#/context/i18n-context";
 import { DataTable } from "#components/datatable/data-table.tsx";
 import { api } from "#lib/api.ts";
 import { domainColumns } from "#lib/columns/domain.columns.tsx";
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/_authenticated/(admin)/domains/')({
 })
 
 function RouteComponent() {
+  const { t } = useI18n();
   const { data: domainResponse } = useQuery({
     queryKey: ["agent-domains"],
     // @ts-ignore
@@ -24,10 +26,8 @@ function RouteComponent() {
             {/* Page Header */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">Domainler</h2>
-                <p className="text-muted-foreground">
-                  Tüm acente domainlerini görüntüleyin ve yönetin.
-                </p>
+                <h2 className="text-2xl font-bold tracking-tight">{t('domains.title')}</h2>
+                <p className="text-muted-foreground">{t('domains.subtitle')}</p>
               </div>
             </div>
 

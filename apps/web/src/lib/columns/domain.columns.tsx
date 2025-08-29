@@ -1,6 +1,7 @@
 import { ConfirmDialog } from "#/components/confirm-dialog";
 import { Badge } from "#/components/ui/badge";
 import { Button } from "#/components/ui/button";
+import { useI18n } from "#/context/i18n-context";
 import { api } from "#lib/api.ts";
 import { formatDate } from "#lib/utils.ts";
 import { IconTrash } from "@tabler/icons-react";
@@ -27,33 +28,45 @@ const colHelper = createColumnHelper<DomainResponse>();
 
 export const domainColumns = [
   colHelper.accessor("domain", {
-    header: "Domain",
+    header: () => {
+      const { t } = useI18n();
+      return t("domains.columns.domain");
+    },
     cell: ({ row }) => (
       <div className="font-medium text-foreground">{row.original.domain}</div>
     ),
   }),
 
   colHelper.accessor("agent.name", {
-    header: "Acente",
+    header: () => {
+      const { t } = useI18n();
+      return t("domains.columns.agent");
+    },
     cell: ({ row }) => (
       <div className="text-sm">{row.original.agent?.name || "-"}</div>
     ),
   }),
 
   colHelper.accessor("isEnabled", {
-    header: "Durum",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.status");
+    },
     cell: ({ getValue }) => {
       const isEnabled = getValue();
       return (
         <Badge variant={isEnabled ? "default" : "secondary"}>
-          {isEnabled ? "Aktif" : "Pasif"}
+          {isEnabled ? "Active" : "Inactive"}
         </Badge>
       );
     },
   }),
 
   colHelper.accessor("createdAt", {
-    header: "Oluşturulma Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.createdAt");
+    },
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground">
         {formatDate(row.original.createdAt, "dd.MM.yyyy HH:mm")}
@@ -62,7 +75,10 @@ export const domainColumns = [
   }),
 
   colHelper.accessor("updatedAt", {
-    header: "Güncellenme Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.updatedAt");
+    },
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground">
         {formatDate(row.original.updatedAt, "dd.MM.yyyy HH:mm")}
@@ -72,7 +88,10 @@ export const domainColumns = [
 
   colHelper.display({
     id: "actions",
-    header: "İşlemler",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.actions");
+    },
     cell: (info) => {
       const domain = info.row.original;
       return <DomainActions domain={domain} />;

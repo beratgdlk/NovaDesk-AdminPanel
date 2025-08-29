@@ -8,6 +8,12 @@ type Messages = Record<Locale, Dictionary>;
 
 const defaultMessages: Messages = {
   tr: {
+    // Domains page
+    'domains.title': 'Domainler',
+    'domains.subtitle': 'Tüm acente domainlerini görüntüleyin ve yönetin.',
+    'domains.columns.domain': 'Domain',
+    'domains.columns.agent': 'Acente',
+    'common.status': 'Durum',
     // Agents page
     'agents.title': 'Acenteler',
     'agents.subtitle': 'Tüm acenteleri yönetin ve yeni acente ekleyin.',
@@ -43,6 +49,12 @@ const defaultMessages: Messages = {
     'dashboard.forMonth': 'Seçili aya göre mesaj, teklif ve poliçe',
   },
   en: {
+    // Domains page
+    'domains.title': 'Domains',
+    'domains.subtitle': 'View and manage all agent domains.',
+    'domains.columns.domain': 'Domain',
+    'domains.columns.agent': 'Agent',
+    'common.status': 'Status',
     // Agents page
     'agents.title': 'Agents',
     'agents.subtitle': 'Manage all agents and add new ones.',
