@@ -25,6 +25,47 @@ const db = {
   ] as any[],
 };
 
+// Seed helpers to enrich demo data for visual variety
+(() => {
+  // More agents
+  const agentCount = 6;
+  for (let i = 2; i <= agentCount; i++) {
+    const uuid = `agent-${i}`;
+    db.agents.push({ uuid, name: `Agent ${i}`, insurupAgentId: `AGENT-${1000 + i}`, createdAt: now(), updatedAt: now() });
+  }
+
+  // More users
+  const firstNames = ['Ada', 'Bora', 'Cem', 'Deniz', 'Efe', 'Funda', 'Gökhan', 'Hale', 'İpek', 'Kerem', 'Lara', 'Mert', 'Naz', 'Okan', 'Pelin', 'Rüzgar', 'Seda', 'Tolga', 'Umut', 'Yasemin'];
+  const lastNames = ['Yılmaz', 'Demir', 'Şahin', 'Çelik', 'Kaya', 'Yıldız', 'Aydın', 'Öztürk', 'Arslan', 'Doğan'];
+  for (let i = 0; i < 40; i++) {
+    const id = String(2 + i);
+    const fn = firstNames[i % firstNames.length];
+    const ln = lastNames[i % lastNames.length];
+    const agent = db.agents[(i % db.agents.length)];
+    db.users.push({ id, firstName: fn, lastName: ln, email: `${fn.toLowerCase()}.${ln.toLowerCase()}@example.com`, isActive: i % 7 !== 0, rolesSlugs: i % 5 === 0 ? ['editor'] : ['admin'], createdAt: now(), updatedAt: now(), agent: { uuid: agent.uuid, name: agent.name } });
+  }
+
+  // More domains
+  const domainCount = 14;
+  for (let i = 2; i <= domainCount; i++) {
+    const agent = db.agents[i % db.agents.length];
+    db.domains.push({ uuid: `d${i}`, domain: `site${i}.demo.dev`, isEnabled: i % 3 !== 0, createdAt: now(), updatedAt: now(), agent: { uuid: agent.uuid, name: agent.name, insurupAgentId: agent.insurupAgentId ?? `AGENT-${1000 + i}` } });
+  }
+
+  // More conversations with a few messages
+  for (let i = 2; i <= 8; i++) {
+    db.conversations.push({
+      conversationId: `conv-${i}`,
+      title: `Konuşma ${i}`,
+      updatedAt: now(),
+      messages: [
+        { id: `m-${i}-1`, role: 'user', parts: [{ type: 'text', text: 'Merhaba' }] },
+        { id: `m-${i}-2`, role: 'assistant', parts: [{ type: 'text', text: 'Size nasıl yardımcı olabilirim?' }] },
+      ],
+    });
+  }
+})();
+
 // Agents API
 const agents = Object.assign(
   ({ uuid }: { uuid: UUID }) => ({
