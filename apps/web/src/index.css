@@ -1,0 +1,315 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    --radius: 0.625rem;
+    /* NovaDesk Light Theme - Teal / Graphite */
+    --background: oklch(0.99 0.005 180);
+    --foreground: oklch(0.22 0.03 260);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.22 0.03 260);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.22 0.03 260);
+    --primary: oklch(0.72 0.08 180); /* teal */
+    --primary-foreground: oklch(0.99 0.005 180);
+    --secondary: oklch(0.96 0.01 200);
+    --secondary-foreground: oklch(0.28 0.04 260);
+    --muted: oklch(0.96 0.01 200);
+    --muted-foreground: oklch(0.5 0.03 260);
+    --accent: oklch(0.96 0.01 200);
+    --accent-foreground: oklch(0.28 0.04 260);
+    --destructive: oklch(0.6 0.18 25);
+    --border: oklch(0.92 0.01 250);
+    --input: oklch(0.92 0.01 250);
+    --ring: oklch(0.7 0.06 190);
+    --chart-1: oklch(0.65 0.18 180);
+    --chart-2: oklch(0.6 0.12 200);
+    --chart-3: oklch(0.52 0.1 240);
+    --chart-4: oklch(0.82 0.16 95);
+    --chart-5: oklch(0.75 0.15 70);
+
+    --sidebar: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+}
+
+.dark {
+    /* NovaDesk Dark Theme */
+    --background: oklch(0.18 0.03 260);
+    --foreground: oklch(0.98 0.005 180);
+    --card: oklch(0.2 0.03 260);
+    --card-foreground: oklch(0.98 0.005 180);
+    --popover: oklch(0.2 0.03 260);
+    --popover-foreground: oklch(0.98 0.005 180);
+    --primary: oklch(0.78 0.09 180);
+    --primary-foreground: oklch(0.12 0.02 260);
+    --secondary: oklch(0.28 0.03 260);
+    --secondary-foreground: oklch(0.98 0.005 180);
+    --muted: oklch(0.28 0.03 260);
+    --muted-foreground: oklch(0.7 0.02 260);
+    --accent: oklch(0.28 0.03 260);
+    --accent-foreground: oklch(0.98 0.005 180);
+    --destructive: oklch(0.65 0.16 25);
+    --border: oklch(1 0 0 / 12%);
+    --input: oklch(1 0 0 / 16%);
+    --ring: oklch(0.62 0.04 190);
+    --chart-1: oklch(0.55 0.16 180);
+    --chart-2: oklch(0.68 0.13 160);
+    --chart-3: oklch(0.74 0.12 210);
+    --chart-4: oklch(0.62 0.22 300);
+    --chart-5: oklch(0.64 0.2 25);
+}
+
+@theme inline {
+    --font-inter: "Inter", "sans-serif";
+    --font-manrope: "Manrope", "sans-serif";
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent;
+    }
+    html {
+        @apply overflow-x-hidden;
+    }
+    body {
+        @apply bg-background text-foreground min-h-svh w-full;
+    }
+
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+
+    /* Prevent focus zoom on mobile devices */
+    @media screen and (max-width: 767px) {
+        input,
+        select,
+        textarea {
+            font-size: 16px !important;
+        }
+    }
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 2rem;
+}
+
+@utility no-scrollbar {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@utility faded-bottom {
+    @apply after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:hidden after:h-32 after:w-full after:bg-[linear-gradient(180deg,_transparent_10%,_var(--background)_70%)] md:after:block;
+}
+
+/* styles.css */
+.CollapsibleContent {
+    overflow: hidden;
+}
+.CollapsibleContent[data-state="open"] {
+    animation: slideDown 300ms ease-out;
+}
+.CollapsibleContent[data-state="closed"] {
+    animation: slideUp 300ms ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--radix-collapsible-content-height);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        height: var(--radix-collapsible-content-height);
+    }
+    to {
+        height: 0;
+    }
+}
+
+/* Streaming mesajlar için animasyonlar */
+@keyframes typewriter {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    0%,
+    50% {
+        opacity: 1;
+    }
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--primary), 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(var(--primary), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--primary), 0);
+    }
+}
+
+@keyframes streaming-dots {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes typing-dot-bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gentle-pulse {
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@layer components {
+    .streaming-message {
+        @apply relative;
+    }
+
+    .streaming-indicator {
+        @apply inline-flex items-center gap-1 text-xs text-muted-foreground;
+    }
+
+    .streaming-dot {
+        @apply w-1 h-1 bg-current rounded-full;
+        animation: streaming-dots 1.4s infinite ease-in-out;
+    }
+
+    .streaming-dot:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .streaming-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .streaming-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    /* Genel streaming efektleri */
+    .message-content-streaming {
+        @apply relative;
+    }
+
+    /* Streaming mesajlar için özel scroll behavior */
+    .streaming-message {
+        scroll-margin-top: 100px;
+    }
+}
+
+@layer utilities {
+    .animate-typing-dot-bounce {
+        animation: typing-dot-bounce 1.4s infinite ease-in-out;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out;
+    }
+
+    .animate-gentle-pulse {
+        animation: gentle-pulse 2s infinite ease-in-out;
+    }
+}

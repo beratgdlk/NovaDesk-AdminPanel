@@ -1,0 +1,10 @@
+# API specific ignores
+.env
+
+# Public Storage directory
+public/storage/*
+!public/storage/.gitkeep
+
+# Session data directory
+data/sessions/*
+!data/sessions/.gitkeep
