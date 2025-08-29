@@ -131,9 +131,11 @@ function AgentActions({ agent }: AgentActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const queryClient = useQueryClient();
 
+  const { t } = useI18n();
+
   const handleEdit = () => {
     openFormDialog({
-      title: "Acente Düzenle",
+      title: t('agents.update.title'),
       content: <AgentUpdateForm agent={agent} onSuccess={closeFormDialog} />,
       maxWidth: "sm:max-w-[425px]",
     });
@@ -152,11 +154,11 @@ function AgentActions({ agent }: AgentActionsProps) {
       .delete();
 
     if (response.data) {
-      toast.success("Acente başarıyla silindi");
+      toast.success(t('agents.delete.success'));
       queryClient.invalidateQueries({ queryKey: ["agents"] });
       setDeleteDialogOpen(false);
     } else {
-      toast.error("Acente silinirken bir hata oluştu");
+      toast.error(t('agents.delete.error'));
     }
     setIsDeleting(false);
   };
@@ -204,22 +206,20 @@ function AgentActions({ agent }: AgentActionsProps) {
       <ConfirmDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
-        title="Acenteyi Sil"
+        title={t('agents.delete.title')}
         desc={
           <div>
             <p className="mb-2">
-              <strong>"{agent.name}"</strong> acentesini silmek istediğinizden
-              emin misiniz?
+              {t('agents.delete.confirmPrefix')} <strong>"{agent.name}"</strong> {t('agents.delete.confirmSuffix')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Bu işlem geri alınamaz ve acente ile ilgili tüm veriler
-              silinecektir.
+              {t('common.deleteWarning')}
             </p>
           </div>
         }
         destructive
-        confirmText={isDeleting ? "Siliniyor..." : "Sil"}
-        cancelBtnText="İptal"
+        confirmText={isDeleting ? t('common.deleting') : t('common.delete')}
+        cancelBtnText={t('common.cancel')}
         handleConfirm={handleDeleteConfirm}
         isLoading={isDeleting}
       />

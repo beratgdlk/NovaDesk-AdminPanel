@@ -150,6 +150,7 @@ function RoleActions({ role }: RoleActionsProps) {
   const [showModalOpen, setShowModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const isAdminRole = role.uuid === "admin";
 
@@ -159,7 +160,7 @@ function RoleActions({ role }: RoleActionsProps) {
 
   const handleEdit = () => {
     openFormDialog({
-      title: "Rol Düzenle",
+      title: t('roles.update.title'),
       content: <RoleUpdateForm role={role} onSuccess={closeFormDialog} />,
       maxWidth: "sm:max-w-[700px]",
     });
@@ -183,14 +184,14 @@ function RoleActions({ role }: RoleActionsProps) {
         .delete();
 
       if (response.data) {
-        toast.success("Rol başarıyla silindi");
+        toast.success(t('roles.delete.success'));
         queryClient.invalidateQueries({ queryKey: ["roles"] });
         setDeleteDialogOpen(false);
       } else {
-        toast.error("Rol silinirken bir hata oluştu");
+        toast.error(t('roles.delete.error'));
       }
     } catch (error) {
-      toast.error("Rol silinirken bir hata oluştu");
+      toast.error(t('roles.delete.error'));
     } finally {
       setIsDeleting(false);
     }
@@ -250,22 +251,20 @@ function RoleActions({ role }: RoleActionsProps) {
       <ConfirmDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
-        title="Rolü Sil"
+        title={t('roles.delete.title')}
         desc={
           <div>
             <p className="mb-2">
-              <strong>"{role.name}"</strong> rolünü silmek istediğinizden
-              emin misiniz?
+              {t('roles.delete.confirmPrefix')} <strong>"{role.name}"</strong> {t('roles.delete.confirmSuffix')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Bu işlem geri alınamaz ve rol ile ilgili tüm veriler
-              silinecektir.
+              {t('common.deleteWarning')}
             </p>
           </div>
         }
         destructive
-        confirmText={isDeleting ? "Siliniyor..." : "Sil"}
-        cancelBtnText="İptal"
+        confirmText={isDeleting ? t('common.deleting') : t('common.delete')}
+        cancelBtnText={t('common.cancel')}
         handleConfirm={handleDeleteConfirm}
         isLoading={isDeleting}
       />

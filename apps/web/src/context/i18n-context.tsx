@@ -8,6 +8,28 @@ type Messages = Record<Locale, Dictionary>;
 
 const defaultMessages: Messages = {
   tr: {
+    'common.deleteWarning': 'Bu işlem geri alınamaz ve ilgili tüm veriler silinecektir.',
+    // Users dialog
+    'users.update.title': 'Kullanıcı Düzenle',
+    'users.delete.title': 'Kullanıcıyı Sil',
+    'users.delete.success': 'Kullanıcı başarıyla silindi',
+    'users.delete.error': 'Kullanıcı silinirken bir hata oluştu',
+    'users.delete.confirmPrefix': '"',
+    'users.delete.confirmSuffix': '" kullanıcısını silmek istediğinizden emin misiniz?',
+    // Agents dialog
+    'agents.update.title': 'Acente Düzenle',
+    'agents.delete.title': 'Acenteyi Sil',
+    'agents.delete.success': 'Acente başarıyla silindi',
+    'agents.delete.error': 'Acente silinirken bir hata oluştu',
+    'agents.delete.confirmPrefix': '"',
+    'agents.delete.confirmSuffix': '" acentesini silmek istediğinizden emin misiniz?',
+    // Roles dialog
+    'roles.update.title': 'Rol Düzenle',
+    'roles.delete.title': 'Rolü Sil',
+    'roles.delete.success': 'Rol başarıyla silindi',
+    'roles.delete.error': 'Rol silinirken bir hata oluştu',
+    'roles.delete.confirmPrefix': '"',
+    'roles.delete.confirmSuffix': '" rolünü silmek istediğinizden emin misiniz?',
     // Common
     'common.status': 'Durum',
     'common.createdAt': 'Oluşturulma Tarihi',
@@ -43,7 +65,6 @@ const defaultMessages: Messages = {
     'domains.subtitle': 'Tüm acente domainlerini görüntüleyin ve yönetin.',
     'domains.columns.domain': 'Domain',
     'domains.columns.agent': 'Acente',
-    'common.status': 'Durum',
     // Agents page
     'agents.title': 'Acenteler',
     'agents.subtitle': 'Tüm acenteleri yönetin ve yeni acente ekleyin.',
@@ -52,9 +73,6 @@ const defaultMessages: Messages = {
     'agents.columns.name': 'Acente Adı',
     'agents.columns.insurupId': 'Insurup ID',
     'agents.columns.domains': 'Domain Sayısı',
-    'common.createdAt': 'Oluşturulma Tarihi',
-    'common.updatedAt': 'Güncellenme Tarihi',
-    'common.actions': 'İşlemler',
     // Sidebar
     'sidebar.general': 'Genel',
     'sidebar.home': 'Ana Sayfa',
@@ -79,6 +97,28 @@ const defaultMessages: Messages = {
     'dashboard.forMonth': 'Seçili aya göre mesaj, teklif ve poliçe',
   },
   en: {
+    'common.deleteWarning': 'This action cannot be undone and all related data will be deleted.',
+    // Users dialog
+    'users.update.title': 'Edit User',
+    'users.delete.title': 'Delete User',
+    'users.delete.success': 'User deleted successfully',
+    'users.delete.error': 'An error occurred while deleting the user',
+    'users.delete.confirmPrefix': 'Do you really want to delete user ',
+    'users.delete.confirmSuffix': '?',
+    // Agents dialog
+    'agents.update.title': 'Edit Agent',
+    'agents.delete.title': 'Delete Agent',
+    'agents.delete.success': 'Agent deleted successfully',
+    'agents.delete.error': 'An error occurred while deleting the agent',
+    'agents.delete.confirmPrefix': 'Do you really want to delete agent ',
+    'agents.delete.confirmSuffix': '?',
+    // Roles dialog
+    'roles.update.title': 'Edit Role',
+    'roles.delete.title': 'Delete Role',
+    'roles.delete.success': 'Role deleted successfully',
+    'roles.delete.error': 'An error occurred while deleting the role',
+    'roles.delete.confirmPrefix': 'Do you really want to delete role ',
+    'roles.delete.confirmSuffix': '?',
     // Common
     'common.status': 'Status',
     'common.createdAt': 'Created At',
@@ -114,7 +154,6 @@ const defaultMessages: Messages = {
     'domains.subtitle': 'View and manage all agent domains.',
     'domains.columns.domain': 'Domain',
     'domains.columns.agent': 'Agent',
-    'common.status': 'Status',
     // Agents page
     'agents.title': 'Agents',
     'agents.subtitle': 'Manage all agents and add new ones.',
@@ -123,9 +162,6 @@ const defaultMessages: Messages = {
     'agents.columns.name': 'Agent Name',
     'agents.columns.insurupId': 'Insurup ID',
     'agents.columns.domains': 'Domain Count',
-    'common.createdAt': 'Created At',
-    'common.updatedAt': 'Updated At',
-    'common.actions': 'Actions',
     // Sidebar
     'sidebar.general': 'General',
     'sidebar.home': 'Home',

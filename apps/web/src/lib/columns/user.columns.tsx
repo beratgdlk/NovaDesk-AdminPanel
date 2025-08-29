@@ -173,6 +173,7 @@ function UserActions({ user }: UserActionsProps) {
   const [showModalOpen, setShowModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const handleView = () => {
     setShowModalOpen(true);
@@ -180,7 +181,7 @@ function UserActions({ user }: UserActionsProps) {
 
   const handleEdit = () => {
     openFormDialog({
-      title: "Kullanıcı Düzenle",
+      title: t('users.update.title'),
       content: <UserUpdateForm user={user} onSuccess={closeFormDialog} />,
       maxWidth: "sm:max-w-[700px]",
     });
@@ -200,14 +201,14 @@ function UserActions({ user }: UserActionsProps) {
         .delete();
 
       if (response.data) {
-        toast.success("Kullanıcı başarıyla silindi");
+        toast.success(t('users.delete.success'));
         queryClient.invalidateQueries({ queryKey: ["users"] });
         setDeleteDialogOpen(false);
       } else {
-        toast.error("Kullanıcı silinirken bir hata oluştu");
+        toast.error(t('users.delete.error'));
       }
     } catch (error) {
-      toast.error("Kullanıcı silinirken bir hata oluştu");
+      toast.error(t('users.delete.error'));
     } finally {
       setIsDeleting(false);
     }
@@ -261,22 +262,20 @@ function UserActions({ user }: UserActionsProps) {
       <ConfirmDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
-        title="Kullanıcıyı Sil"
+        title={t('users.delete.title')}
         desc={
           <div>
             <p className="mb-2">
-              <strong>"{user.firstName} {user.lastName}"</strong> kullanıcısını silmek istediğinizden
-              emin misiniz?
+              {t('users.delete.confirmPrefix')} <strong>"{user.firstName} {user.lastName}"</strong> {t('users.delete.confirmSuffix')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Bu işlem geri alınamaz ve kullanıcı ile ilgili tüm veriler
-              silinecektir.
+              {t('common.deleteWarning')}
             </p>
           </div>
         }
         destructive
-        confirmText={isDeleting ? "Siliniyor..." : "Sil"}
-        cancelBtnText="İptal"
+        confirmText={isDeleting ? t('common.deleting') : t('common.delete')}
+        cancelBtnText={t('common.cancel')}
         handleConfirm={handleDeleteConfirm}
         isLoading={isDeleting}
       />
