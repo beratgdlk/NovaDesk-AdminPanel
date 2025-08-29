@@ -8,6 +8,18 @@ type Messages = Record<Locale, Dictionary>;
 
 const defaultMessages: Messages = {
   tr: {
+    // Common
+    'common.status': 'Durum',
+    'common.createdAt': 'Oluşturulma Tarihi',
+    'common.updatedAt': 'Güncellenme Tarihi',
+    'common.actions': 'İşlemler',
+    'common.view': 'Görüntüle',
+    'common.edit': 'Düzenle',
+    'common.delete': 'Sil',
+    'common.deleting': 'Siliniyor...',
+    'common.cancel': 'İptal',
+    'common.active': 'Aktif',
+    'common.inactive': 'Pasif',
     // Roles page
     'roles.title': 'Roller',
     'roles.subtitle': 'Tüm rolleri yönetin ve yeni rol ekleyin.',
@@ -67,6 +79,18 @@ const defaultMessages: Messages = {
     'dashboard.forMonth': 'Seçili aya göre mesaj, teklif ve poliçe',
   },
   en: {
+    // Common
+    'common.status': 'Status',
+    'common.createdAt': 'Created At',
+    'common.updatedAt': 'Updated At',
+    'common.actions': 'Actions',
+    'common.view': 'View',
+    'common.edit': 'Edit',
+    'common.delete': 'Delete',
+    'common.deleting': 'Deleting...',
+    'common.cancel': 'Cancel',
+    'common.active': 'Active',
+    'common.inactive': 'Inactive',
     // Roles page
     'roles.title': 'Roles',
     'roles.subtitle': 'Manage all roles and add new ones.',

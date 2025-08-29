@@ -56,7 +56,7 @@ export const domainColumns = [
       const isEnabled = getValue();
       return (
         <Badge variant={isEnabled ? "default" : "secondary"}>
-          {isEnabled ? "Active" : "Inactive"}
+          {isEnabled ? useI18n().t('common.active') : useI18n().t('common.inactive')}
         </Badge>
       );
     },

@@ -206,6 +206,7 @@ function RoleActions({ role }: RoleActionsProps) {
           className="h-8 w-8 p-0"
           title="Görüntüle"
           onClick={handleView}
+          title={useI18n().t('common.view')}
         >
           <IconEye className="h-4 w-4" />
         </Button>
@@ -216,7 +217,7 @@ function RoleActions({ role }: RoleActionsProps) {
           size="sm"
           className="h-8 w-8 p-0"
           onClick={handleEdit}
-          title="Düzenle"
+          title={useI18n().t('common.edit')}
           disabled={isAdminRole}
         >
           <IconEdit className="h-4 w-4" />
@@ -231,7 +232,7 @@ function RoleActions({ role }: RoleActionsProps) {
             : "text-red-600 hover:text-red-700 hover:bg-red-50"
           }`}
           onClick={handleDeleteClick}
-          title={isAdminRole ? "Admin rolü silinemez" : "Sil"}
+          title={isAdminRole ? 'Admin rolü silinemez' : useI18n().t('common.delete')}
           disabled={isAdminRole}
         >
           <IconTrash className="h-4 w-4" />

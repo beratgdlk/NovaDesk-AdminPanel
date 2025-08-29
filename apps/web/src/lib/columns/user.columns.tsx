@@ -116,7 +116,7 @@ export const userColumns = [
 
       return (
         <Badge variant={isActive ? "default" : "secondary"}>
-          {isActive ? "Active" : "Inactive"}
+          {isActive ? useI18n().t('common.active') : useI18n().t('common.inactive')}
         </Badge>
       );
     },
@@ -221,7 +221,7 @@ function UserActions({ user }: UserActionsProps) {
           variant="ghost"
           size="sm"
           className="h-8 w-8 p-0"
-          title="Görüntüle"
+          title={useI18n().t('common.view')}
           onClick={handleView}
         >
           <IconEye className="h-4 w-4" />
@@ -233,7 +233,7 @@ function UserActions({ user }: UserActionsProps) {
           size="sm"
           className="h-8 w-8 p-0"
           onClick={handleEdit}
-          title="Düzenle"
+          title={useI18n().t('common.edit')}
         >
           <IconEdit className="h-4 w-4" />
         </Button>
@@ -244,7 +244,7 @@ function UserActions({ user }: UserActionsProps) {
           size="sm"
           className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
           onClick={handleDeleteClick}
-          title="Sil"
+          title={useI18n().t('common.delete')}
         >
           <IconTrash className="h-4 w-4" />
         </Button>
