@@ -4,12 +4,12 @@ import { Calendar } from '#/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card';
 import { ChartTooltip, ChartTooltipContent } from '#/components/ui/chart';
 import { Popover, PopoverContent, PopoverTrigger } from '#/components/ui/popover';
-import { useI18n } from '#/context/i18n-context';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#/components/ui/select';
+import { useI18n } from '#/context/i18n-context';
 import { cn } from '#/lib/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
-import { tr, enUS } from 'date-fns/locale';
+import { enUS, tr } from 'date-fns/locale';
 import { useMemo, useState } from 'react';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 

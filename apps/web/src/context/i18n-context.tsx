@@ -8,6 +8,17 @@ type Messages = Record<Locale, Dictionary>;
 
 const defaultMessages: Messages = {
   tr: {
+    // Agents page
+    'agents.title': 'Acenteler',
+    'agents.subtitle': 'Tüm acenteleri yönetin ve yeni acente ekleyin.',
+    'agents.create.title': 'Yeni Acente Ekle',
+    'agents.create.button': 'Acente Ekle',
+    'agents.columns.name': 'Acente Adı',
+    'agents.columns.insurupId': 'Insurup ID',
+    'agents.columns.domains': 'Domain Sayısı',
+    'common.createdAt': 'Oluşturulma Tarihi',
+    'common.updatedAt': 'Güncellenme Tarihi',
+    'common.actions': 'İşlemler',
     // Sidebar
     'sidebar.general': 'Genel',
     'sidebar.home': 'Ana Sayfa',
@@ -32,6 +43,17 @@ const defaultMessages: Messages = {
     'dashboard.forMonth': 'Seçili aya göre mesaj, teklif ve poliçe',
   },
   en: {
+    // Agents page
+    'agents.title': 'Agents',
+    'agents.subtitle': 'Manage all agents and add new ones.',
+    'agents.create.title': 'Add New Agent',
+    'agents.create.button': 'Add Agent',
+    'agents.columns.name': 'Agent Name',
+    'agents.columns.insurupId': 'Insurup ID',
+    'agents.columns.domains': 'Domain Count',
+    'common.createdAt': 'Created At',
+    'common.updatedAt': 'Updated At',
+    'common.actions': 'Actions',
     // Sidebar
     'sidebar.general': 'General',
     'sidebar.home': 'Home',

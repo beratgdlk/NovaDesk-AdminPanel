@@ -2,6 +2,7 @@ import { AgentCreateForm } from "#/components/form/agent-create-form";
 import { Main } from "#/components/layout/main";
 import { Button } from "#/components/ui/button";
 import { useFormDialog } from "#/context/form-dialog-context";
+import { useI18n } from "#/context/i18n-context";
 import { DataTable } from "#components/datatable/data-table.tsx";
 import { api } from "#lib/api.ts";
 import { agentColumns } from "#lib/columns/agent.columns.tsx";
@@ -15,10 +16,11 @@ export const Route = createFileRoute("/_authenticated/(admin)/agents/")({
 
 function RouteComponent() {
   const { openFormDialog, closeFormDialog } = useFormDialog();
+  const { t } = useI18n();
 
   const handleCreateAgent = () => {
     openFormDialog({
-      title: "Yeni Acente Ekle",
+      title: t("agents.create.title"),
       content: <AgentCreateForm onSuccess={closeFormDialog} />,
       maxWidth: "sm:max-w-[425px]",
     });
@@ -38,15 +40,13 @@ function RouteComponent() {
             {/* Page Header */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">Acenteler</h2>
-                <p className="text-muted-foreground">
-                  Tüm acenteleri yönetin ve yeni acente ekleyin.
-                </p>
+                <h2 className="text-2xl font-bold tracking-tight">{t("agents.title")}</h2>
+                <p className="text-muted-foreground">{t("agents.subtitle")}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Button onClick={handleCreateAgent}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Acente Ekle
+                  {t("agents.create.button")}
                 </Button>
               </div>
             </div>

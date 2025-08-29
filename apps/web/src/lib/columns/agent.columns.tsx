@@ -2,11 +2,12 @@ import { ConfirmDialog } from "#/components/confirm-dialog";
 import { AgentUpdateForm } from "#/components/form/agent-update-form";
 import { Button } from "#/components/ui/button";
 import { useFormDialog } from "#/context/form-dialog-context";
+import { useI18n } from "#/context/i18n-context";
 import { api } from "#lib/api.ts";
 import {
-  IconEdit,
-  IconExternalLink,
-  IconTrash
+    IconEdit,
+    IconExternalLink,
+    IconTrash
 } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
@@ -22,14 +23,20 @@ const colHelper = createColumnHelper<AgentShowResponse>();
 
 export const agentColumns = [
   colHelper.accessor("name", {
-    header: "Acente Adı",
+    header: () => {
+      const { t } = useI18n();
+      return t("agents.columns.name");
+    },
     cell: ({ row }) => (
       <div className="font-medium text-foreground">{row.original.name}</div>
     ),
   }),
 
   colHelper.accessor("insurupAgentId", {
-    header: "Insurup ID",
+    header: () => {
+      const { t } = useI18n();
+      return t("agents.columns.insurupId");
+    },
     cell: ({ row }) => (
       <div className="text-sm text-muted-foreground font-mono">
         {row.original.insurupAgentId ?? "-"}
@@ -38,21 +45,27 @@ export const agentColumns = [
   }),
 
   colHelper.accessor("whatsappIntegrationConfig", {
-    header: "WhatsApp",
+    header: () => {
+      const { t } = useI18n();
+      return "WhatsApp";
+    },
     cell: (info) => {
       const config = info.getValue() as any;
       const isEnabled = config?.isEnabled ?? false;
 
       return (
         <Badge variant={isEnabled ? "default" : "secondary"}>
-          {isEnabled ? "Aktif" : "Pasif"}
+          {isEnabled ? "Active" : "Inactive"}
         </Badge>
       );
     },
   }),
 
   colHelper.accessor("domains", {
-    header: "Domain Sayısı",
+    header: () => {
+      const { t } = useI18n();
+      return t("agents.columns.domains");
+    },
     cell: ({ row }) => {
       const domains = row.original.domains;
       const activeDomains = domains?.filter((d) => d.isEnabled).length ?? 0;
@@ -68,7 +81,10 @@ export const agentColumns = [
   }),
 
   colHelper.accessor("createdAt", {
-    header: "Oluşturulma Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.createdAt");
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -79,7 +95,10 @@ export const agentColumns = [
   }),
 
   colHelper.accessor("updatedAt", {
-    header: "Güncellenme Tarihi",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.updatedAt");
+    },
     cell: ({ row }) => {
       return (
         <div className="text-sm text-muted-foreground">
@@ -91,7 +110,10 @@ export const agentColumns = [
 
   colHelper.display({
     id: "actions",
-    header: "İşlemler",
+    header: () => {
+      const { t } = useI18n();
+      return t("common.actions");
+    },
     cell: (info) => {
       const agent = info.row.original;
       return <AgentActions agent={agent} />;
